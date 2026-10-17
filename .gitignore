@@ -1,0 +1,4 @@
+.env
+*.sqlite3
+leads.xlsx
+__pycache__/

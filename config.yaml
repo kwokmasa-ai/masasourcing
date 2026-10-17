@@ -1,0 +1,77 @@
+# MasaSourcing lead finder configuration.
+# Edit lists here. Secrets belong in .env, never in this file.
+
+# Default look-back window, in days. Override with --days.
+days: 7
+
+# Reddit: scanned for new submissions and new comments inside the window.
+reddit:
+  subreddits:
+    - FulfillmentByAmazon
+    - AmazonSeller
+    - ecommerce
+    - shopify
+    - smallbusiness
+    - Entrepreneur
+    - EtsySellers
+    - importing
+    - supplychain
+    - manufacturing
+    - Alibaba
+    - AmazonFBA
+  # How many recent submissions and comments to pull per subreddit.
+  limit_per_subreddit: 200
+
+# Web: keyword queries sent to the search API. Results are fetched politely.
+web:
+  queries:
+    - "need inspection China factory"
+    - "looking for sourcing agent China"
+    - "Alibaba supplier scam"
+    - "quality problem with China supplier"
+    - "factory audit Guangzhou"
+    - "pre-shipment inspection China"
+    - "1688 supplier help"
+    - "China supplier overpaying MOQ"
+  results_per_query: 10
+  # Seconds to wait between requests to the same domain.
+  rate_limit_seconds: 3
+  # Characters of page text kept for classification.
+  max_text_chars: 4000
+  # Identify the bot honestly. Put a real contact address or URL here.
+  user_agent: "MasaSourcingLeadFinder/1.0 (contact: replace-with-your-email@example.com)"
+  request_timeout_seconds: 15
+
+# First pass: cheap keyword match. A post or page must contain at least one
+# of these (case-insensitive) before it is sent to Claude.
+keywords:
+  - inspection
+  - QC
+  - quality control
+  - sourcing agent
+  - sourcing
+  - 1688
+  - Alibaba
+  - factory
+  - supplier
+  - defect
+  - scam
+  - MOQ
+  - OEM
+  - private label
+  - pre-shipment
+  - audit
+  - China
+
+# Second pass: Claude classification.
+claude:
+  model: claude-sonnet-5-5
+  max_tokens: 800
+  # Items sent per run. Keeps daily API cost predictable.
+  max_items_per_run: 150
+
+# Output.
+output:
+  xlsx_path: leads.xlsx
+  db_path: leadfinder.sqlite3
+  top_n_dry_run: 10
